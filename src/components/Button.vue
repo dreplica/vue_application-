@@ -15,9 +15,7 @@ export default {
   data() {
     return {
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-      operations: ["+", "-", "/", "*"],
-      remove_item: "<",
-      pressed_button: ""
+      operations: ["+", "-", "/", "*", "C"]
     };
   },
   methods: {
@@ -25,12 +23,6 @@ export default {
       console.log(arg);
       this.pressed_button = arg;
       this.$emit("send_values", arg);
-    },
-    send_value() {},
-
-    remove_value() {
-      //deletes tyhe last element
-      this.$emit("remove_values");
     }
   },
   computed: {

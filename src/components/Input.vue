@@ -1,27 +1,31 @@
 <template>
-  <form>
-    <label for='input'>
-      <input type="text" v-model="content" />
-    </label>
-  </form>
+  <div class="display">{{show_inputed}}</div>
 </template>
 
 <script>
 export default {
   name: "Input",
+  props: {
+    inputed: { type: Number, default: 10 }
+  },
   data() {
     return {
-      content: ""
+      content: `${this.inputed}`
+    };
+  },
+  methods: {},
+  computed: {
+    show_inputed() {
+      return this.content;
     }
-  },
-  methods:{
-
-  },
-  computed:{
-
   }
 };
 </script>
 
-<style>
+<style scoped>
+.display {
+  width: 400px;
+  height: 50px;
+  border: 2px solid black;
+}
 </style>
