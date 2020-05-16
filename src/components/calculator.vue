@@ -1,13 +1,14 @@
 <template>
-  <div>calculator</div>
-  <Input></Input>
+  <div>
+  <Input />
   <Buttons></Buttons>
+  </div>
 </template>
 
 <script>
 
 import Buttons from './Button';
-import Input from './input';
+import Input from './Input';
 
 export default {
   name: "calculator",

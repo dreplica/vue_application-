@@ -1,6 +1,6 @@
 <template>
   <form>
-    <label>
+    <label for='input'>
       <input type="text" v-model="content" />
     </label>
   </form>
@@ -15,7 +15,7 @@ export default {
     }
   },
   methods:{
-      
+
   },
   computed:{
 
