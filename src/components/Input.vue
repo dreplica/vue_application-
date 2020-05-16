@@ -6,17 +6,12 @@
 export default {
   name: "Input",
   props: {
-    inputed: { type: Number, default: 10 }
-  },
-  data() {
-    return {
-      content: `${this.inputed}`
-    };
+    inputed: { type: String}
   },
   methods: {},
   computed: {
     show_inputed() {
-      return this.content;
+      return this.inputed;
     }
   }
 };
