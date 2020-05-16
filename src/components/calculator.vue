@@ -3,7 +3,7 @@
     <Input :inputed="show_input" />
     {{show_input}}
     <Buttons @send_values="get_values"></Buttons>
-    <button>Run</button>
+    <button @click='calculate'>Run</button>
   </div>
 </template>
 
@@ -30,6 +30,10 @@ export default {
     get_values(arg) {
       this.input += "" + arg;
       console.log(this.input);
+    },
+    calculate(){
+        alert(this.input)
+        // run_arithmetic_op(this.input)
     }
   },
   computed: {
