@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="numbers">
-      <button v-for="(num,key) in show_numbers" :key="key">{{num}}</button>
+      <button v-for="(num,key) in show_numbers" @click="pressed(num)" :key="key">{{num}}</button>
     </div>
     <div class="operators">
-      <button v-for="(logic,key) in show_operators" :key="key">{{logic}}</button>
+      <button v-for="(logic,key) in show_operators" @click="pressed(logic)" :key="key">{{logic}}</button>
     </div>
   </div>
 </template>
@@ -16,14 +16,22 @@ export default {
     return {
       numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
       operations: ["+", "-", "/", "*"],
-      pressed_button:"",
+      remove_item: "<",
+      pressed_button: ""
     };
   },
-  methods:{
-      send_value(){
-        this.$emit('send_values',)
-          },
-      
+  methods: {
+    pressed(arg) {
+      console.log(arg);
+      this.pressed_button = arg;
+      this.$emit("send_values", arg);
+    },
+    send_value() {},
+
+    remove_value() {
+      //deletes tyhe last element
+      this.$emit("remove_values");
+    }
   },
   computed: {
     show_numbers() {
