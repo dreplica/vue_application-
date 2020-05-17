@@ -26,24 +26,24 @@ export default {
     };
   },
   methods: {
-      check(arg){
-          console.log("tring to check",arg)
-          this.$emit("updating_user",arg)
-      },
+    check(arg) {
+      console.log("tring to check", arg);
+      this.$emit("updating_user", arg);
+    },
     async signin_user() {
-     let user ="";
-       await Firebase.auth
+      let user = "";
+      await Firebase.auth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(async ()=>{
-       const result = await Firebase.database.collection('users')
-       .where("email","==",this.email)
-       .get() 
-    await result.forEach(x=>user = x.data().name)
-    // await console.log(user,this.email)  
-    })
-    await this.check(user)
-  }
-  }
+        .then(async () => {
+          const result = await Firebase.database
+            .collection("users")
+            .where("email", "==", this.email)
+            .get();
+          await result.forEach((x) => (user = x.data().name));
+        });
+      await this.$store.commit("change_user", user);
+    },
+  },
 };
 </script>
 

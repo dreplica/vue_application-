@@ -26,8 +26,8 @@ export default {
     return {
       activeUser: Firebase.auth.currentUser,
       showAuth: false,
-      user: "Guest",
-    };
+      user:this.$store.state.id  
+        };
   },
 
   method: {
@@ -40,7 +40,7 @@ export default {
 
   computed: {
     get_user() {
-      return this.user;
+      return this.$store.state.current_user;
     },
     get_auth() {
       return this.showAuth;
