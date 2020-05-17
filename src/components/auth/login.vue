@@ -41,7 +41,8 @@ export default {
             );
           });
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
+        this.error = error.message
       }
     },
   },

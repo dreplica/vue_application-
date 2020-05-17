@@ -23,35 +23,35 @@ export default {
       email: "",
       password: "",
       name: "",
-      error:"",
+      error: "",
     };
   },
   methods: {
     signup_user() {
-        Firebase.auth
-          .createUserWithEmailAndPassword(this.email, this.password)
-          .then(function(result){
-            Firebase.users.doc(`${result.user.uid}`).set({
-              name: this.name,
-              email: this.email,
-              id: result.user.uid,
-            });
-            this.$store.commit("change_user", {
-              name: this.name,
-              id: result.user.uid,
-            });
-          }).catch(error=>{
-        console.log("hello",error)
-        this.error = "please check your entry";
-      })
+      Firebase.auth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((result) =>{
+          Firebase.users.doc(`${result.user.uid}`).set({
+            name: this.name,
+            email: this.email,
+            id: result.user.uid,
+          });
+          this.$store.commit("change_user", {
+            name: this.name,
+            id: result.user.uid,
+          });
+        })
+        .catch((error) => {
+          console.log("hello", error);
+          this.error = "please check your entry";
+        });
     },
   },
-  computed:{
-     get_error(){
-      return this.error
-      }
-    }
-  
+  computed: {
+    get_error() {
+      return this.error;
+    },
+  },
 };
 </script>
 
