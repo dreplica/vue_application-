@@ -1,43 +1,50 @@
 <template>
   <div>
-      <form>
-          <!-- add name, location, when the 
+    <form @submit.prevent="signup_user()">
+      <!-- add name, location, when the 
           result from registering comes back, 
           send the collection(user details) -->
-
-      <p><input type="email" v-model='email'/></p>
-      <p><input type='password' v-model="password" /></p>
-      <button >Register<button>
-      <form>
+      <label for="name"
+        >Name:<input type="text" v-model="name" required
+      /></label>
+      <label for="emial"
+        >Email:<input type="email" v-model="email" required
+      /></label>
+      <label for="password"
+        >Password<input type="password" v-model="password" required
+      /></label>
+      <button>Register</button>
+    </form>
   </div>
 </template>
 
 <script>
-import * as Firebase from '../../config/firebase'
+import * as Firebase from "../../config/firebase";
 export default {
-    data(){
-        return {
-        email:"",
-        password:""
-        }
-        },
-    methods:{
-        signup_user(){
-            Firebase.auth.createUserWithEmailAndPassword(
-                this.email,this.password
-            ).then((result)=>{
-                    this.$emit("user_created",result)
-                })
-            }
-        },
-
-    computed:{
-
-
-    }
-}
+  name: "Registration",
+  data() {
+    return {
+      email: "",
+      password: "",
+      name: "",
+    };
+  },
+  methods: {
+    signup_user() {
+      Firebase.auth
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((result) => {
+          console.log(result);
+          Firebase.users.doc(`${result.user.uid}`).set({
+            name: this.name,
+            email: this.email,
+            id: result.user.uid,
+          });
+          this.$emit("user_created", result);
+        });
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

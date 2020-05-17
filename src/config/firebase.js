@@ -16,5 +16,5 @@ var firebaseConfig = {
 
   export const database = firebase.firestore();
   export const auth = firebase.auth();
-  export const current_user = auth.currentUser()
+//   export const current_user = auth.currentUser()
   export const users = database.collection('users');
