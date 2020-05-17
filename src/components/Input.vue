@@ -1,5 +1,6 @@
 <template>
-  <div class="display">{{show_inputed}}</div>
+  <div class="display">
+      <p>{{show_inputed}}</p></div>
 </template>
 
 <script>
@@ -19,7 +20,12 @@ export default {
 
 <style scoped>
 .display {
-  width: 400px;
+  width: 340px;
+  margin:auto;
+  display:flex;
+  align-items: center;
+  font-size:30px;
+  padding-left:10px;
   height: 50px;
   border: 2px solid black;
 }
