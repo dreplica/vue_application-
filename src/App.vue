@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <login />
+    <calculator msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/calculator.vue'
-
+import Calculator from './components/calculator.vue'
+import login from './components/auth/login'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Calculator,
+    login
   }
 }
 </script>
