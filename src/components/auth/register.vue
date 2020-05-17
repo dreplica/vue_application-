@@ -40,11 +40,14 @@ export default {
             email: this.email,
             id: result.user.uid,
           });
-          this.$emit("user_created", result);
+          this.$emit("update_user", this.name);
         });
     },
   },
 };
 </script>
 
-<style></style>
+
+<style >
+
+</style>

@@ -26,15 +26,24 @@ export default {
     };
   },
   methods: {
-    signin_user() {
-      Firebase.auth
+      check(arg){
+          console.log("tring to check",arg)
+          this.$emit("updating_user",arg)
+      },
+    async signin_user() {
+     let user ="";
+       await Firebase.auth
         .signInWithEmailAndPassword(this.email, this.password)
-        .then((result) => {
-          console.log(result);
-          this.$emit("user_created", result);
-        });
-    },
-  },
+        .then(async ()=>{
+       const result = await Firebase.database.collection('users')
+       .where("email","==",this.email)
+       .get() 
+    await result.forEach(x=>user = x.data().name)
+    // await console.log(user,this.email)  
+    })
+    await this.check(user)
+  }
+  }
 };
 </script>
 

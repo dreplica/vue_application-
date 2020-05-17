@@ -1,8 +1,12 @@
 <template>
   <div id="app">
-    <authorize :class="!showAuth && 'hide'"/>
+    <p>Hello {{ get_user }}</p>
+    <authorize :class="!get_auth ? 'show' : 'hide'" @showUser="update" />
     <!-- {{ get_user }} -->
-    <calculator msg="Welcome to Your Vue.js App" :class='showAuth && "hide"'/>
+    <calculator
+      msg="Welcome to Your Vue.js App"
+      :class="get_auth ? 'show' : 'hide'"
+    />
   </div>
 </template>
 
@@ -21,16 +25,26 @@ export default {
   data() {
     return {
       activeUser: Firebase.auth.currentUser,
-      showAuth:false,
+      showAuth: false,
+      user: "Guest",
     };
   },
 
-  method: {},
+  method: {
+    update(arg) {
+      console.log("something entere");
+      this.user = arg;
+      this.showAuth = true;
+    },
+  },
 
   computed: {
-    get_user(){
-      return this.activeUser
-      }
+    get_user() {
+      return this.user;
+    },
+    get_auth() {
+      return this.showAuth;
+    },
   },
 };
 </script>
@@ -45,7 +59,34 @@ export default {
   margin-top: 60px;
 }
 
-.hide{
-  display:none;
+.hide {
+  animation: hidden 1s linear;
+  position: absolute;
+  display: none;
+  z-index: -1;
+}
+
+.show {
+  animation: display 2s linear;
+  position: absolute;
+  z-index: 1;
+}
+
+@keyframes display {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hidden {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 </style>
