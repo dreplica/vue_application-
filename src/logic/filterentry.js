@@ -20,7 +20,6 @@ export default function(origin, arg) {
   const check_first_value = operators.includes(first_operator);
 
   if ((checking_num && checking_arg) || (check_first_value && checking_arg)) {
-    console.log("go away");
     return origin;
   }
 
@@ -29,7 +28,6 @@ export default function(origin, arg) {
   }
 
   if ((check_current_element_for_dot || last_number_with_dot) && arg === ".") {
-    console.log("theres already a dot there");
     return origin;
   }
 
