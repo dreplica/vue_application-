@@ -11,6 +11,7 @@
 import Buttons from "./Button";
 import Input from "./Input";
 import calculate from "../logic/calculate";
+import filter from "../logic/filterentry";
 
 export default {
   name: "calculator",
@@ -25,7 +26,7 @@ export default {
   },
   methods: {
     get_values(arg) {
-      this.input += "" + arg;
+      this.input = filter(this.input, arg);
       console.log(this.input);
     },
     calculate() {
