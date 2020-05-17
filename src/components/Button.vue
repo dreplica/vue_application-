@@ -16,7 +16,6 @@ export default {
   },
   methods: {
     pressed(arg) {
-      console.log(arg);
       this.pressed_button = arg;
       this.$emit("send_values", arg);
     }

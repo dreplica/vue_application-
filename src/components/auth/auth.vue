@@ -4,7 +4,6 @@
       <login v-show="show_login === '1'" />
       <register v-show="show_login === '0'" />
     </div>
-    <!-- {{screens}} -->
     <select v-model="toggle">
       <option value="0">Register</option>
       <option value="1">Login</option>
@@ -31,7 +30,6 @@ export default {
       return arg ? false : true;
     },
     toggle_bar(arg) {
-      console.log(arg);
       this.toggle = this.change(arg);
     },
   },

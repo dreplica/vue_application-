@@ -1,6 +1,7 @@
 <template>
   <div class="form">
     <p>Please provide your login details</p>
+    <p v-show='get_error.length' class='error'>{{get_error}}</p>
     <form @submit.prevent="signin_user()">
       <label for="emial">Email</label
       ><input type="email" v-model="email" required />
@@ -19,6 +20,7 @@ export default {
     return {
       email: "",
       password: "",
+      error:"",
     };
   },
   methods: {
@@ -43,10 +45,19 @@ export default {
       }
     },
   },
+  computed:{
+    get_error(){
+      return this.error
+      }
+    }
 };
 </script>
 
 <style>
+.error{
+  background:red;
+  }
+
 .form {
   width: 340px;
   text-align: center;
@@ -65,6 +76,8 @@ form {
 input {
   height: 40px;
   margin-bottom: 10px;
+  padding:5px 15px;
+  font-size: 20px;
 }
 
 button {
