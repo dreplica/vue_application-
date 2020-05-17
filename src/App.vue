@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <p>Hello {{ get_user }}</p>
-    <authorize :class="!get_auth ? 'show' : 'hide'" @showUser="update" />
-    <!-- {{ get_user }} -->
+    <h3>Hello {{ get_user }}</h3>
+    <authorize :class="!get_user ? 'show' : 'hide'" />
     <calculator
       msg="Welcome to Your Vue.js App"
-      :class="get_auth ? 'show' : 'hide'"
+      :class="get_user ? 'show' : 'hide'"
     />
   </div>
 </template>
@@ -13,7 +12,6 @@
 <script>
 import Calculator from "./components/calculator.vue";
 import auth from "./components/auth/auth";
-import * as Firebase from "./config/firebase";
 
 export default {
   name: "App",
@@ -23,33 +21,19 @@ export default {
   },
 
   data() {
-    return {
-      activeUser: Firebase.auth.currentUser,
-      showAuth: false,
-      user:this.$store.state.id  
-        };
-  },
-
-  method: {
-    update(arg) {
-      console.log("something entere");
-      this.user = arg;
-      this.showAuth = true;
-    },
+    return{}
   },
 
   computed: {
     get_user() {
       return this.$store.state.current_user;
     },
-    get_auth() {
-      return this.showAuth;
-    },
   },
 };
 </script>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -57,6 +41,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  margin:auto;
 }
 
 .hide {
@@ -68,7 +53,7 @@ export default {
 
 .show {
   animation: display 2s linear;
-  position: absolute;
+  position: relative;
   z-index: 1;
 }
 

@@ -1,9 +1,14 @@
 <template>
   <div class="auth">
-    <login v-show="set_toggle" @updating_user='pass_user'/>
-    <register v-show="!set_toggle" />
-    <button v-show="set_toggle" :click="change_toggle()">Register here</button>
-    <button v-show="!set_toggle" :click="change_toggle()">Login here</button>
+    <div class="display-form">
+      <login v-show="show_login === '1'" />
+      <register v-show="show_login === '0'" />
+    </div>
+    <!-- {{screens}} -->
+    <select v-model="toggle">
+      <option value="0">Register</option>
+      <option value="1">Login</option>
+    </select>
   </div>
 </template>
 
@@ -18,29 +23,43 @@ export default {
   },
   data() {
     return {
-      toggle: false,
+      toggle: "0",
     };
   },
   methods: {
-    change_toggle() {
-      console.log("ki");
-      if (this.togle) {
-        this.toggle = false;
-      } else {
-        this.toggle = true;
-      }
+    change(arg) {
+      return arg ? false : true;
     },
-    pass_user(arg){
-        console.log("is passing",arg)
-        this.$emit('showUser',arg)
-        }
+    toggle_bar(arg) {
+      console.log(arg);
+      this.toggle = this.change(arg);
+    },
   },
   computed: {
-    set_toggle() {
+    show_login() {
       return this.toggle;
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.auth {
+  width: 340px;
+  margin: auto;
+}
+
+.display-form {
+  width: 340px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+select {
+  width: 340px;
+  height: 50px;
+  text-align: center;
+}
+</style>

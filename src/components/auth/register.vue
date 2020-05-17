@@ -1,18 +1,13 @@
 <template>
   <div>
+    <p>Please Register below</p>
     <form @submit.prevent="signup_user()">
-      <!-- add name, location, when the 
-          result from registering comes back, 
-          send the collection(user details) -->
-      <label for="name"
-        >Name:<input type="text" v-model="name" required
-      /></label>
-      <label for="emial"
-        >Email:<input type="email" v-model="email" required
-      /></label>
-      <label for="password"
-        >Password<input type="password" v-model="password" required
-      /></label>
+      <label for="name">Name</label
+      ><input type="text" v-model="name" required />
+      <label for="emial">Email</label
+      ><input type="email" v-model="email" required />
+      <label for="password">Password</label
+      ><input type="password" v-model="password" required />
       <button>Register</button>
     </form>
   </div>
@@ -34,20 +29,19 @@ export default {
       Firebase.auth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((result) => {
-          console.log(result);
           Firebase.users.doc(`${result.user.uid}`).set({
             name: this.name,
             email: this.email,
             id: result.user.uid,
           });
-          this.$emit("update_user", this.name);
+          this.$store.commit("change_user", {
+            name: this.name,
+            id: result.user.uid,
+          });
         });
     },
   },
 };
 </script>
 
-
-<style >
-
-</style>
+<style></style>
