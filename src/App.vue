@@ -1,21 +1,18 @@
 <template>
   <div id="app">
-    <h1>Rock your calculator app</h1>
-    <button @click="signout">logout</button>
+    <div class="header">
+      <h1>Rock your calculator app</h1>
+      <button @click="signout">logout</button>
+    </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import * as Firebase from "./config/firebase";
-// import auth from "./components/auth/auth";
 
 export default {
   name: "App",
-  components: {
-    // Calculator,
-    // authorize: auth,
-  },
   beforeCreate() {
     console.log("hello");
     Firebase.auth.onAuthStateChanged((user) => {
@@ -25,6 +22,7 @@ export default {
         // update the store here to do protected route.
       } else {
         console.log("badoo");
+        this.$router.push("/login");
         //update the store here to do protected route
       }
     });
@@ -58,6 +56,19 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   margin: auto;
+}
+
+.header {
+  width: 100%;
+  background: black;
+  height: auto;
+  padding: 10px 0px;
+  color: white;
+  margin-bottom:10px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items:center;
 }
 
 .hide {

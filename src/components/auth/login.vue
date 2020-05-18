@@ -1,15 +1,18 @@
 <template>
   <div class="form">
     <p>Please provide your login details</p>
-    <p v-show="get_error.length" class="error">{{ get_error }}</p>
+    <h3 v-show="get_error.length" class="error">{{ get_error }}</h3>
     <form @submit.prevent="signin_user()">
-      <label for="emial">Email</label
-      ><input type="email" v-model="email" required />
-      <label for="password">Password</label
-      ><input type="password" v-model="password" required />
+      <label for="emial">Email</label>
+      <input type="email" v-model="email" required />
+      <label for="password">Password</label>
+      <input type="password" v-model="password" required />
       <button>Login</button>
     </form>
-    <p>did you <a href="" @click.prevent="route_forget">forgot password?</a></p>
+    <p>
+      did you
+      <a href @click.prevent="route_forget">forgot password?</a>
+    </p>
   </div>
 </template>
 
@@ -17,6 +20,11 @@
 import * as Firebase from "../../config/firebase";
 export default {
   name: "Login",
+  beforeMount() {
+    if (Firebase.auth.currentUser.emailVerified) {
+      this.$router.push("/");
+    }
+  },
   data() {
     return {
       email: "",
@@ -45,11 +53,10 @@ export default {
         if (user.emailVerified) {
           this.$router.push("/calculator");
         } else {
-          this.error = "user is no verified yet, please check your email";
-          throw Error("user is no verified yet, please check your email");
+          this.error = "user is not verified yet, please check your email";
         }
       } catch (error) {
-        this.error = error.message;
+        this.error = "please check your input";
       }
     },
     route_forget() {
@@ -65,12 +72,9 @@ export default {
 </script>
 
 <style>
-.error {
-  background: red;
-}
-
 .form {
   width: 340px;
+  margin: auto;
   text-align: center;
 }
 

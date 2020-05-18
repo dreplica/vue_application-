@@ -21,6 +21,11 @@
 import * as Firebase from "../../config/firebase";
 export default {
   name: "Registration",
+  beforeMount() {
+    if (Firebase.auth.currentUser.emailVerified) {
+      this.$router.push("/");
+    }
+  },
   data() {
     return {
       email: "",
@@ -33,7 +38,6 @@ export default {
   methods: {
     signup_user() {
       try {
-        
         Firebase.auth
           .createUserWithEmailAndPassword(this.email, this.password)
           .then((result) => {
@@ -46,11 +50,13 @@ export default {
               name: this.name,
               id: result.user.uid,
             });
-            Firebase.auth.currentUser.sendEmailVerification(Firebase.actionCodeSettings);
+            Firebase.auth.currentUser.sendEmailVerification(
+              Firebase.actionCodeSettings
+            );
             this.message = "please check your email for verification";
-          })
+          });
       } catch (error) {
-       this.error = error.message;
+        this.error = error.message;
       }
     },
   },
