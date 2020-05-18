@@ -1,7 +1,7 @@
 <template>
   <div class="form">
     <p>Please provide your login details</p>
-    <p v-show='get_error.length' class='error'>{{get_error}}</p>
+    <p v-show="get_error.length" class="error">{{ get_error }}</p>
     <form @submit.prevent="signin_user()">
       <label for="emial">Email</label
       ><input type="email" v-model="email" required />
@@ -20,7 +20,7 @@ export default {
     return {
       email: "",
       password: "",
-      error:"",
+      error: "",
     };
   },
   methods: {
@@ -33,31 +33,31 @@ export default {
               .collection("users")
               .where("email", "==", this.email)
               .get();
-            await result.forEach((user) =>
+            await result.forEach((user) => {
               this.$store.commit("change_user", {
                 name: user.data().name,
                 id: response.user.uid,
-              })
-            );
+              });
+              this.$router.push("/calculator");
+            });
           });
       } catch (error) {
-        // console.log(error.message);
-        this.error = error.message
+        this.error = error.message;
       }
     },
   },
-  computed:{
-    get_error(){
-      return this.error
-      }
-    }
+  computed: {
+    get_error() {
+      return this.error;
+    },
+  },
 };
 </script>
 
 <style>
-.error{
-  background:red;
-  }
+.error {
+  background: red;
+}
 
 .form {
   width: 340px;
@@ -77,7 +77,7 @@ form {
 input {
   height: 40px;
   margin-bottom: 10px;
-  padding:5px 15px;
+  padding: 5px 15px;
   font-size: 20px;
 }
 

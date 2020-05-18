@@ -1,36 +1,24 @@
 <template>
   <div class="auth">
-    <div class="display-form">
-      <login v-show="show_login === '1'" />
-      <register v-show="show_login === '0'" />
-    </div>
-    <select v-model="toggle">
-      <option value="0">Register</option>
-      <option value="1">Login</option>
-    </select>
+    <button @click.prevent="gotologin()">Login</button>
+    <button @click.prevent="gotoregister()">Register</button>
   </div>
 </template>
 
 <script>
-import login from "./login.vue";
-import register from "./register.vue";
-
 export default {
-  components: {
-    login: login,
-    register: register,
-  },
+  components: {},
   data() {
     return {
       toggle: "0",
     };
   },
   methods: {
-    change(arg) {
-      return arg ? false : true;
+    gotologin() {
+      this.$router.push("/login");
     },
-    toggle_bar(arg) {
-      this.toggle = this.change(arg);
+    gotoregister() {
+      this.$router.push("/register");
     },
   },
   computed: {

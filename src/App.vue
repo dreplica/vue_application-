@@ -1,27 +1,44 @@
 <template>
   <div id="app">
-    <h3>Hello {{ get_user }}</h3>
-    <authorize :class="!get_user ? 'show' : 'hide'" />
-    <calculator
-      msg="Welcome to Your Vue.js App"
-      :class="get_user ? 'show' : 'hide'"
-    />
+    <h1>Rock your calculator app</h1>
+    <button @click="signout">logout</button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Calculator from "./components/calculator.vue";
-import auth from "./components/auth/auth";
+import * as Firebase from "./config/firebase";
+// import auth from "./components/auth/auth";
 
 export default {
   name: "App",
   components: {
-    Calculator,
-    authorize: auth,
+    // Calculator,
+    // authorize: auth,
+  },
+  beforeCreate() {
+    console.log("hello");
+    Firebase.auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log(user);
+        this.$router.push("/calculator");
+        // update the store here to do protected route.
+      } else {
+        console.log("badoo");
+        //update the store here to do protected route
+      }
+    });
   },
 
   data() {
-    return{}
+    return {};
+  },
+
+  methods: {
+    async signout() {
+      await Firebase.auth.signOut();
+      await this.$router.push("/");
+    },
   },
 
   computed: {
@@ -33,7 +50,6 @@ export default {
 </script>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -41,7 +57,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  margin:auto;
+  margin: auto;
 }
 
 .hide {

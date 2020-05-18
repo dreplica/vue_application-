@@ -9,8 +9,8 @@
 <script>
 import Buttons from "./Button";
 import Input from "./Input";
-import validate_run from "../logic/validate_run";
-import filter from "../logic/filterentry";
+import validate_run from "../../logic/validate_run";
+import filter from "../../logic/filterentry";
 
 export default {
   name: "calculator",

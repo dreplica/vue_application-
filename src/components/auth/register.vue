@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="message.length">
+      <p>{{ get_message }}</p>
+    </div>
     <p>Please Register below</p>
     <p v-show="get_error.length" class="error">{{ get_error }}</p>
     <form @submit.prevent="signup_user()">
@@ -24,13 +27,14 @@ export default {
       password: "",
       name: "",
       error: "",
+      message: "",
     };
   },
   methods: {
     signup_user() {
       Firebase.auth
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((result) =>{
+        .then((result) => {
           Firebase.users.doc(`${result.user.uid}`).set({
             name: this.name,
             email: this.email,
@@ -40,6 +44,13 @@ export default {
             name: this.name,
             id: result.user.uid,
           });
+
+          Firebase.auth.sendSignInLinkToEmail(
+            this.email,
+            Firebase.actionCodeSettings
+          );
+
+          this.message = "please check your email for verification";
         })
         .catch((error) => {
           console.log("hello", error);
@@ -50,6 +61,9 @@ export default {
   computed: {
     get_error() {
       return this.error;
+    },
+    get_message() {
+      return this.message;
     },
   },
 };
