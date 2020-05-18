@@ -8,19 +8,29 @@ export const store = new Vuex.Store({
     current_user: "",
     id: null,
     auth: "hide",
-     },
+    live: false,
+  },
   mutations: {
     change_user(state, arg) {
       state.current_user = arg.name;
       state.id = arg.id;
     },
-    change_auth_screen(state, arg) {
-      state.auth = arg;
+    live(state) {
+      console.log("update");
+      state.live = true;
+      console.log(state);
     },
-},
+    kill(state) {
+      state.live = false;
+    },
+  },
   getters: {
     get_auth: (state) => {
       return state.auth;
+    },
+    get_live: (state) => {
+      console.log("requested");
+      return state.live;
     },
   },
 });

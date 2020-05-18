@@ -13,6 +13,9 @@
       did you
       <a href @click.prevent="route_forget">forgot password?</a>
     </p>
+    <p>
+      Don't have an account? <a href @click.prevent="register_">Register</a>
+    </p>
   </div>
 </template>
 
@@ -20,9 +23,13 @@
 import * as Firebase from "../../config/firebase";
 export default {
   name: "Login",
-  beforeMount() {
-    if (Firebase.auth.currentUser.emailVerified) {
-      this.$router.push("/");
+  beforeCreate() {
+    try {
+      if (Firebase.auth.currentUser.emailVerified) {
+        this.$router.push("/");
+      }
+    } catch (error) {
+      console.log("");
     }
   },
   data() {
@@ -61,6 +68,9 @@ export default {
     },
     route_forget() {
       this.$router.push("/fgt-email");
+    },
+    register_() {
+      this.$router.push("/register");
     },
   },
   computed: {

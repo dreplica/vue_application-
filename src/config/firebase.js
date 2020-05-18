@@ -18,6 +18,6 @@ export const auth = firebase.auth();
 export const users = database.collection("users");
 
 export const actionCodeSettings = {
-  url: "http://localhost:8080/#/login",
+  url: "http://vuecalctest.netlify.app/",
   handleCodeInApp: true,
 };

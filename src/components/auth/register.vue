@@ -14,6 +14,7 @@
       ><input type="password" v-model="password" required />
       <button>Register</button>
     </form>
+    <p>already have an account?<a href @click.prevent="login_">Login</a></p>
   </div>
 </template>
 
@@ -21,9 +22,13 @@
 import * as Firebase from "../../config/firebase";
 export default {
   name: "Registration",
-  beforeMount() {
-    if (Firebase.auth.currentUser.emailVerified) {
-      this.$router.push("/");
+  beforeCreate() {
+    try {
+      if (Firebase.auth.currentUser.emailVerified) {
+        this.$router.push("/");
+      }
+    } catch (error) {
+      console.log("");
     }
   },
   data() {
@@ -58,6 +63,9 @@ export default {
       } catch (error) {
         this.error = error.message;
       }
+    },
+    login_() {
+      this.$router.push("/login");
     },
   },
   computed: {

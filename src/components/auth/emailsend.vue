@@ -11,9 +11,13 @@ import * as Firebase from "../../config/firebase";
 
 export default {
   name: "forgotpassword",
-  beforeMount() {
-    if (Firebase.auth.currentUser.emailVerified) {
-      this.$router.push("/");
+  beforeCreate() {
+    try {
+      if (Firebase.auth.currentUser.emailVerified) {
+        this.$router.push("/");
+      }
+    } catch (error) {
+      console.log("");
     }
   },
   data() {
@@ -30,7 +34,6 @@ export default {
           this.email,
           Firebase.actionCodeSettings
         );
-        alert("io");
         this.message = "check your email for reset link or your spam box";
       } catch (error) {
         this.message = error.message;

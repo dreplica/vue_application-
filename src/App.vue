@@ -2,7 +2,9 @@
   <div id="app">
     <div class="header">
       <h1>Rock your calculator app</h1>
-      <button @click="signout">logout</button>
+      <button v-show="live === true" @click="signout" class="logout">
+        logout
+      </button>
     </div>
     <router-view></router-view>
   </div>
@@ -14,34 +16,42 @@ import * as Firebase from "./config/firebase";
 export default {
   name: "App",
   beforeCreate() {
-    console.log("hello");
-    Firebase.auth.onAuthStateChanged((user) => {
-      if (user.emailVerified) {
-        console.log(user);
-        this.$router.push("/calculator");
-        // update the store here to do protected route.
-      } else {
-        console.log("badoo");
-        this.$router.push("/login");
-        //update the store here to do protected route
-      }
-    });
+    try {
+      Firebase.auth.onAuthStateChanged((user) => {
+        if (user.emailVerified) {
+          this.$router.push("/calculator");
+        }
+      });
+    } catch (error) {
+      this.$router.push("/login");
+    }
+  },
+
+  updated() {
+    this.live_session = this.$store.state.live;
   },
 
   data() {
-    return {};
+    return {
+      live_session: false,
+    };
   },
 
   methods: {
     async signout() {
       await Firebase.auth.signOut();
-      await this.$router.push("/");
+      await this.$router.push("/login");
+      this.$store.commit("kill");
+      this.live_session = false;
     },
   },
 
   computed: {
     get_user() {
       return this.$store.state.current_user;
+    },
+    live() {
+      return this.live_session;
     },
   },
 };
@@ -64,11 +74,23 @@ export default {
   height: auto;
   padding: 10px 0px;
   color: white;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 
   display: flex;
   justify-content: space-around;
-  align-items:center;
+  align-items: center;
+}
+
+.logout {
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  font-weight: bolder;
+}
+
+.logout:hover {
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 .hide {
