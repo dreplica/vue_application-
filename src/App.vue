@@ -19,7 +19,7 @@ export default {
   beforeCreate() {
     console.log("hello");
     Firebase.auth.onAuthStateChanged((user) => {
-      if (user) {
+      if (user.emailVerified) {
         console.log(user);
         this.$router.push("/calculator");
         // update the store here to do protected route.

@@ -1,23 +1,40 @@
 <template>
   <form @submit.prevent="send_link">
-    <p v-show="active">Please check your email for link to reset</p>
+    <p v-show="errormsg.length">{{ errormsg }}</p>
     <input v-model="email" type="email" placeholder="enter email address" />
     <button>Get reset link</button>
   </form>
 </template>
 
 <script>
+import * as Firebase from "../../config/firebase";
+
 export default {
   name: "forgotpassword",
   data() {
     return {
       active: false,
-      email:""
+      email: "",
+      message: "",
     };
   },
   methods: {
-    send_link() {
-      //on sending link, change active to true
+    async send_link() {
+      try {
+        await Firebase.auth.sendPasswordResetEmail(
+          this.email,
+          Firebase.actionCodeSettings
+        );
+        alert("io")
+        this.message = "check your email for reset link or your spam box";
+      } catch (error) {
+        this.message = error.message;
+      }
+    },
+  },
+  computed: {
+    errormsg() {
+      return this.message;
     },
   },
 };

@@ -32,30 +32,26 @@ export default {
   },
   methods: {
     signup_user() {
-      Firebase.auth
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then((result) => {
-          Firebase.users.doc(`${result.user.uid}`).set({
-            name: this.name,
-            email: this.email,
-            id: result.user.uid,
-          });
-          this.$store.commit("change_user", {
-            name: this.name,
-            id: result.user.uid,
-          });
-
-          Firebase.auth.sendSignInLinkToEmail(
-            this.email,
-            Firebase.actionCodeSettings
-          );
-
-          this.message = "please check your email for verification";
-        })
-        .catch((error) => {
-          console.log("hello", error);
-          this.error = "please check your entry";
-        });
+      try {
+        
+        Firebase.auth
+          .createUserWithEmailAndPassword(this.email, this.password)
+          .then((result) => {
+            Firebase.users.doc(`${result.user.uid}`).set({
+              name: this.name,
+              email: this.email,
+              id: result.user.uid,
+            });
+            this.$store.commit("change_user", {
+              name: this.name,
+              id: result.user.uid,
+            });
+            Firebase.auth.currentUser.sendEmailVerification(Firebase.actionCodeSettings);
+            this.message = "please check your email for verification";
+          })
+      } catch (error) {
+       this.error = error.message;
+      }
     },
   },
   computed: {

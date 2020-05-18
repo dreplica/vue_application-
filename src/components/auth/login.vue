@@ -9,6 +9,7 @@
       ><input type="password" v-model="password" required />
       <button>Login</button>
     </form>
+    <p>did you <a href="" @click.prevent="route_forget">forgot password?</a></p>
   </div>
 </template>
 
@@ -38,12 +39,21 @@ export default {
                 name: user.data().name,
                 id: response.user.uid,
               });
-              this.$router.push("/calculator");
             });
           });
+        const user = await Firebase.auth.currentUser;
+        if (user.emailVerified) {
+          this.$router.push("/calculator");
+        } else {
+          this.error = "user is no verified yet, please check your email";
+          throw Error("user is no verified yet, please check your email");
+        }
       } catch (error) {
         this.error = error.message;
       }
+    },
+    route_forget() {
+      this.$router.push("/fgt-email");
     },
   },
   computed: {
