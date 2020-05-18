@@ -2,7 +2,7 @@
   <div id="app">
     <div class="header">
       <h1>Rock your calculator app</h1>
-      <button v-show="live === true" @click="signout" class="logout">
+      <button v-show="live" @click="signout" class="logout">
         logout
       </button>
     </div>
@@ -27,7 +27,7 @@ export default {
     }
   },
 
-  updated() {
+  mounted() {
     this.live_session = this.$store.state.live;
   },
 
@@ -51,7 +51,7 @@ export default {
       return this.$store.state.current_user;
     },
     live() {
-      return this.live_session;
+      return this.$store.state.live;
     },
   },
 };

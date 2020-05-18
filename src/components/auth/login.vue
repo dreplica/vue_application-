@@ -32,6 +32,9 @@ export default {
       console.log("");
     }
   },
+  mounted() {
+    this.$store.commit("kill");
+  },
   data() {
     return {
       email: "",
